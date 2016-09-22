@@ -6,7 +6,7 @@ PROG=main
 SRCS=$(shell ls *.cob)
 OTHER_SRC=$(shell find . -not -name 'main.cob' -name '*.cob')
 # Compilador a usar
-COMP=cobc -x
+COMP=cobc -x -free
 
 $(PROG): $(PROG).cob
 	$(COMP) -o $@ $^ $(OTHER_SRC)
