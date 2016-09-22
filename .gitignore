@@ -1,0 +1,13 @@
+**/*.pdf
+src/main
+report/auto/
+report/*-blx.bib
+report/*.log
+report/*.pdf
+report/*.tex
+report/*.log
+report/*.aux
+report/*.idx
+report/*.out
+report/*.run.xml
+report/*.toc
