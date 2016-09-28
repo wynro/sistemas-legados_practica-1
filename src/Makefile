@@ -8,8 +8,22 @@ OTHER_SRC=$(shell find . -not -name 'main.cob' -name '*.cob')
 # Compilador a usar
 COMP=cobc -x
 
-$(PROG): $(PROG).cob
-	$(COMP) -o $@ $^ $(OTHER_SRC)
+all: $(PROG)
+
+
+$(PROG): $(PROG).cob $(OTHER_SRC)
+	$(COMP) -o $@ $^
+
+.PHONY: wall debug clean
+wall: $(PROG).cob $(OTHER_SRC)
+	$(COMP) -W -o $(PROG) $^
+
+debug: $(PROG).cob $(OTHER_SRC)
+	$(COMP) -fdebugging-line -o $(PROG) $^
+
+clean:
+	rm main
+
 
 .PHONY: edit go goM gedit memcheck
 
