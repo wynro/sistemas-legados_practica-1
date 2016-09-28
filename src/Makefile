@@ -5,6 +5,7 @@ PROG=main
 # Los fuentes son todo fichero acabados en .c
 SRCS=$(shell ls *.cob)
 OTHER_SRC=$(shell find . -not -name 'main.cob' -name '*.cob')
+CPY=$(shell find . -name '*.cpy')
 # Compilador a usar
 COMP=cobc -x
 
