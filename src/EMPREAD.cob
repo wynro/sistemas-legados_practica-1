@@ -4,67 +4,83 @@
        ENVIRONMENT DIVISION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
-           SELECT EMPFILE ASSIGN TO DISK
+           SELECT EMPFILE
+               *> Create file definition and assign it to a specific "EMP.DAT"
+               ASSIGN TO "files/EMP.DAT"
+               *> Exists a field in the file that acts as Key.
+               *> That allows sequential or random reading
                ORGANIZATION IS INDEXED
+               *> Allows both sequential or random reading of the file
                ACCESS MODE IS DYNAMIC
+               *> The field of the file that will index it
                RECORD KEY IS EEMPID
+               *> Special variable that will contain the status of the file
                FILE STATUS IS FSE.
 
-           SELECT LEAVEFILE ASSIGN TO DISK
+           SELECT LEAVEFILE
+               ASSIGN TO "files/LEAVE.DAT"
                ORGANIZATION IS INDEXED
                ACCESS MODE IS DYNAMIC
                RECORD KEY IS LEMPID
                FILE STATUS IS FSL.
 
-           SELECT BRANCHFILE ASSIGN TO DISK
+           SELECT BRANCHFILE
+               ASSIGN TO "files/BRANCH.DAT"
                ORGANIZATION IS INDEXED
                ACCESS MODE IS DYNAMIC
                RECORD KEY IS BBRID
                FILE STATUS IS FSB.
 
-           SELECT DESIGNATIONFILE ASSIGN TO DISK
+           SELECT DESIGNATIONFILE
+               ASSIGN TO "files/DESIG.DAT"
                ORGANIZATION IS SEQUENTIAL
                ACCESS MODE IS SEQUENTIAL
                FILE STATUS IS FSDES.
-
-           SELECT DEPARTMENTFILE ASSIGN TO DISK
+           SELECT DEPARTMENTFILE
+               ASSIGN TO "files/DEPART.DAT"
                ORGANIZATION IS INDEXED
                ACCESS MODE IS DYNAMIC
                RECORD KEY IS DEPCODE
                FILE STATUS IS FSDEP.
 
-           SELECT REVISIONFILE ASSIGN TO DISK
+           SELECT REVISIONFILE
+               ASSIGN TO "files/REVISION.DAT"
                ORGANIZATION IS INDEXED
                ACCESS MODE IS DYNAMIC
                RECORD KEY IS RREVID
                ALTERNATE RECORD KEY IS REMPID
                FILE STATUS IS FSR.
 
-           SELECT PAYMENTFILE ASSIGN TO DISK
+           SELECT PAYMENTFILE
+               ASSIGN TO "files/PAYMENT.DAT"
                ORGANIZATION IS INDEXED
                ACCESS MODE IS DYNAMIC
                RECORD KEY IS PEMPID
                FILE STATUS IS FSP.
 
-           SELECT CONFIRMATIONFILE ASSIGN TO DISK
+           SELECT CONFIRMATIONFILE
+               ASSIGN TO "files/CONFIRM.DAT"
                ORGANIZATION IS INDEXED
                ACCESS MODE IS DYNAMIC
                RECORD KEY IS CCONID
                ALTERNATE RECORD KEY IS CEMPID
                FILE STATUS IS FSC.
 
-           SELECT GRADEFILE ASSIGN TO DISK
+           SELECT GRADEFILE
+               ASSIGN TO "files/GRADE.DAT"
                ORGANIZATION IS SEQUENTIAL
                ACCESS MODE IS SEQUENTIAL
                FILE STATUS IS FSG.
 
-           SELECT TRANSFERFILE ASSIGN TO DISK
+           SELECT TRANSFERFILE
+               ASSIGN TO "files/TRANSFER.DAT"
                ORGANIZATION IS INDEXED
                ACCESS MODE IS DYNAMIC
                RECORD KEY IS TTRFID
                FILE STATUS IS FST.
 
-           SELECT EMPPERSONALFILE ASSIGN TO DISK
+           SELECT EMPPERSONALFILE
+               ASSIGN TO "files/EMPPER.DAT"
                ORGANIZATION IS INDEXED
                ACCESS MODE IS DYNAMIC
                RECORD KEY IS EPEMPID
@@ -72,9 +88,7 @@
 
        DATA DIVISION.
        FILE SECTION.
-       FD EMPFILE
-                                        LABEL RECORDS ARE STANDARD
-                                        VALUE OF FILE-ID IS "EMP.DAT".
+       FD EMPFILE.
        01 EMPREC.
            02 EEMPID    PIC X(6).
            02 EEMPNAME  PIC X(25).
@@ -90,18 +104,14 @@
            02 EBRNID    PIC X(6).
            02 EDESID    PIC X(6).
 
-       FD LEAVEFILE
-                                     LABEL RECORDS ARE STANDARD
-                                     VALUE OF FILE-ID IS "./LEAVE.DAT".
+       FD LEAVEFILE.
        01 LEAVEREC.
            02 LEMPID    PIC X(6).
            02 LFMDATE   PIC X(10).
            02 LTODATE   PIC X(10).
            02 LLEVCAT   PIC X(3).
 
-       FD BRANCHFILE
-                                       LABEL RECORDS ARE STANDARD
-                                       VALUE OF FILE-ID IS "BRANCH.DAT".
+       FD BRANCHFILE.
        01 BRANCHREC.
            02 BBRID    PIC X(6).
            02 BBRNAME  PIC X(15).
@@ -110,24 +120,18 @@
            02 BEMAIL   PIC X(20).
            02 BMGRNAME PIC X(25).
 
-       FD DESIGNATIONFILE
-                                        LABEL RECORDS ARE STANDARD
-                                        VALUE OF FILE-ID IS "DESIG.DAT".
+       FD DESIGNATIONFILE.
        01 DESIGNATIONREC.
            02 DESID    PIC X(6).
            02 DESIGN   PIC X(15).
            02 DESHRT   PIC X(4).
 
-       FD DEPARTMENTFILE
-                                       LABEL RECORDS ARE STANDARD
-                                       VALUE OF FILE-ID IS "DEPART.DAT".
+       FD DEPARTMENTFILE.
        01 DEPARTMENTREC.
            02 DEPCODE  PIC X(6).
            02 DEPNAME  PIC X(20).
 
-       FD REVISIONFILE
-                                     LABEL RECORDS ARE STANDARD
-                                     VALUE OF FILE-ID IS "REVISION.DAT".
+       FD REVISIONFILE.
        01 REVISIONREC.
            02 RREVID   PIC X(6).
            02 REMPID   PIC X(6).
@@ -146,9 +150,7 @@
            02 RESI     PIC 9(6)V99.
            02 RREVDATE PIC X(10).
 
-       FD PAYMENTFILE
-                                    LABEL RECORDS ARE STANDARD
-                                    VALUE OF FILE-ID IS "PAYMENT.DAT".
+       FD PAYMENTFILE.
        01 PAYMENTREC.
            02 PEMPID   PIC X(6).
            02 PBASIC   PIC 9(6)V99.
@@ -186,33 +188,25 @@
            02 PLLOP    PIC 999.
            02 POTHERL  PIC 999.
 
-       FD CONFIRMATIONFILE
-                             LABEL RECORDS ARE STANDARD
-                             VALUE OF FILE-ID IS "CONFIRM.DAT".
+       FD CONFIRMATIONFILE.
        01 CONFIRMATIONREC.
            02 CCONID   PIC X(6).
            02 CEMPID   PIC X(6).
            02 CCDATE   PIC X(6).
 
-       FD GRADEFILE
-                               LABEL RECORDS ARE STANDARD
-                               VALUE OF FILE-ID IS "GRADE.DAT".
+       FD GRADEFILE.
        01 GRADEREC.
            02 GGRADE   PIC 99.
            02 GDESIGN  PIC X(25).
 
-       FD TRANSFERFILE
-                            LABEL RECORDS ARE STANDARD
-                            VALUE OF FILE-ID IS "TRANSFER.DAT".
+       FD TRANSFERFILE.
        01 TRANSFERREC.
            02 TTRFID   PIC X(6).
            02 TEMPID   PIC X(6).
            02 TOBRID   PIC X(6).
            02 TTRFDT   PIC X(10).
 
-       FD EMPPERSONALFILE
-                             LABEL RECORDS ARE STANDARD
-                             VALUE OF FILE-ID IS "EMPPER.DAT".
+       FD EMPPERSONALFILE.
        01 EMPPERSONALREC.
            02 EPEMPID  PIC X(6).
            02 EPTADD   PIC X(30).
@@ -245,48 +239,53 @@
        77 FST   PIC XX.
        77 FSEP  PIC XX.
        77 DES   PIC X(6).
-       77 GR    PIC 99.
+
+       77 GR     PIC 99.
+
        77 CHOICE PIC 99.
+       77 STUFF  PIC 9.
+       77 FS_MSG PIC X(40).
+       77 FS_MSG_AUX PIC X(40).
 
        PROCEDURE DIVISION.
        MAIN-PARA.
            DISPLAY SPACES AT 0101 WITH ERASE EOS.
            DISPLAY "*******************************************"
-                  AT 0310.
+               AT 0310.
            DISPLAY "     HUMAN RESOURCE MANAGEMENT SYSTEM      "
-                  AT 0510.
+               AT 0510.
            DISPLAY "*******************************************"
-                  AT 0710.
-           DISPLAY " 1. EMPLOYEE FILE" AT 1105.
-           DISPLAY " 2. LEAVE FILE" AT 1205.
-           DISPLAY " 3. BRANCH FILE" AT 1305.
-           DISPLAY " 4. DESIGNATION FILE" AT 1405.
-           DISPLAY " 5. DEPARTMENT FILE" AT 1505.
-           DISPLAY " 6. REVISION FILE" AT 1605.
-           DISPLAY " 7. PAYMENT FILE" AT 1705.
-           DISPLAY " 8. CONFIRMATION FILE" AT 1805.
-           DISPLAY " 9. GRADE FILE" AT 1905.
-           DISPLAY "10. TRANSFER FILE" AT 2005.
-           DISPLAY "11. EMPLOYEE PERSONAL FILE" AT 2105.
-           DISPLAY "12. EXIT" AT 2205.
+               AT 0710.
+           DISPLAY "01. EMPLOYEE FILE" AT 0920.
+           DISPLAY "02. LEAVE FILE" AT 1020.
+           DISPLAY "03. BRANCH FILE" AT 1120.
+           DISPLAY "04. DESIGNATION FILE" AT 1220.
+           DISPLAY "05. DEPARTMENT FILE" AT 1320.
+           DISPLAY "06. REVISION FILE" AT 1420.
+           DISPLAY "07. PAYMENT FILE" AT 1520.
+           DISPLAY "08. CONFIRMATION FILE" AT 1620.
+           DISPLAY "09. GRADE FILE" AT 1720.
+           DISPLAY "10. TRANSFER FILE" AT 1820.
+           DISPLAY "11. EMPLOYEE PERSONAL FILE" AT 1920.
+           DISPLAY "12. EXIT" AT 2020.
            DISPLAY "ENTER YOUR CHOICE :" AT 2325.
            ACCEPT CHOICE AT 2345.
-           IF CHOICE = 1
-               GO TO EMP-PARA
-           ELSE
-           IF CHOICE = 2
-               GO TO LEAVE-PARA
-           ELSE
-           *> IF CHOICE = 3
-           *>     GO TO BRANCH-PARA
+           *> IF CHOICE = 1
+           *>     GO TO EMP-PARA
            *> ELSE
-           *> IF CHOICE = 4
-           *>     GO TO DESIGNATION-PARA
+           *> IF CHOICE = 2
+           *>     GO TO LEAVE-PARA
            *> ELSE
+           IF CHOICE = 3
+               GO TO BRANCH-PARA
+           ELSE
+           *> *> IF CHOICE = '04'
+           *> *>     GO TO DESIGNATION-PARA
+           *> *> ELSE
            *> IF CHOICE = 5
            *>     GO TO DEPARTMENT-PARA
            *> ELSE
-           *> IF CHOICE = 6
+           *> IF CHOICE = '06'
            *>     GO TO REVISION-PARA
            *> ELSE
            *> IF CHOICE = 7
