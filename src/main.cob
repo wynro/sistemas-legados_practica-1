@@ -4,10 +4,11 @@
        DATA DIVISION.
        WORKING-STORAGE SECTION.
        77 CHOICE PIC 9.
-                                        
+
        PROCEDURE DIVISION.
        MAIN-PARA.
            DISPLAY SPACES AT 0101 WITH ERASE EOS.
+   *>>D    DISPLAY "DEBUG MODE" AT 0101.
            DISPLAY "*******************************************"
                 AT 0315.
            DISPLAY "     HUMAN RESOURCE MANAGEMENT SYSTEM      "
