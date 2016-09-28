@@ -303,6 +303,9 @@
            *> IF CHOICE = 11
            *>     GO TO EMPPERSONAL-PARA
            *> ELSE
+               DISPLAY SPACES AT 0101 WITH ERASE EOS.
+               DISPLAY "Unimplemented option" AT 1010
+               ACCEPT STUFF AT 1110.
            EXIT PROGRAM.
 
        
