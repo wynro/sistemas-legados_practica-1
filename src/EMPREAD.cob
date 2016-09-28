@@ -308,37 +308,46 @@
                ACCEPT STUFF AT 1110.
            EXIT PROGRAM.
 
-       
-       EMP-PARA.
-           DISPLAY SPACES AT 0101 WITH ERASE EOS.
-           OPEN INPUT EMPFILE.
-           DISPLAY "ENTER CODE :".
-           ACCEPT EEMPID.
-           DISPLAY SPACES AT 0101 WITH ERASE EOS.
-           READ EMPFILE *> INVALID KEY GO TO ERROR-EMP-PARA.
-           DISPLAY " CODE                 :" EEMPID AT 0101.
-           DISPLAY " NAME                 :" EEMPNAME AT 0201.
-           DISPLAY " ADDRESS              :" EEMPADDR AT 0301.
-           DISPLAY " PHONE                :" EPHONE AT 0401.
-           DISPLAY " DATE OF JOIN         :" EDOJ AT 0501.
-           DISPLAY " DIPLOMA              :" EDIP AT 0601.
-           DISPLAY " UG                   :" EUG AT 0701.
-           DISPLAY " PG                   :" EPG AT 0801.
-           DISPLAY " PROFESSIONAL QUALITY :" EPROFQ AT 0901.
-           DISPLAY " SKILL SET            :" ESKILL AT 1001.
-           DISPLAY " GRADE NUMBER         :" EGRDNO AT 1101.
-           DISPLAY " BRANCH CODE          :" EBRNID AT 1201.
-           DISPLAY " DESIGNATION CODE     :" EDESID AT 1301.
-           CLOSE EMPFILE.
-           DISPLAY "PRESS ENTER TO RETURN TO HRMS READ MENU" AT 2020.
-           STOP ' '.
-           GO TO MAIN-PARA.
+       *> EMP-PARA.
+       *>     DISPLAY SPACES AT 0101 WITH ERASE EOS
+       *>     OPEN INPUT EMPFILE
+       *>     DISPLAY "ENTER CODE :"
+       *>     ACCEPT EEMPID
+       *>     DISPLAY SPACES AT 0101 WITH ERASE EOS
+       *>     READ EMPFILE RECORD INTO EMPREC
+       *>     DISPLAY " CODE                 :" EEMPID AT 0101
+       *>     DISPLAY " NAME                 :" EEMPNAME AT 0201
+       *>     DISPLAY " ADDRESS              :" EEMPADDR AT 0301
+       *>     DISPLAY " PHONE                :" EPHONE AT 0401
+       *>     DISPLAY " DATE OF JOIN         :" EDOJ AT 0501
+       *>     DISPLAY " DIPLOMA              :" EDIP AT 0601
+       *>     DISPLAY " UG                   :" EUG AT 0701
+       *>     DISPLAY " PG                   :" EPG AT 0801
+       *>     DISPLAY " PROFESSIONAL QUALITY :" EPROFQ AT 0901
+       *>     DISPLAY " SKILL SET            :" ESKILL AT 1001
+       *>     DISPLAY " GRADE NUMBER         :" EGRDNO AT 1101
+       *>     DISPLAY " BRANCH CODE          :" EBRNID AT 1201
+       *>     DISPLAY " DESIGNATION CODE     :" EDESID AT 1301
+       *>     CLOSE EMPFILE
+       *>     DISPLAY "PRESS ENTER TO RETURN TO HRMS READ MENU" AT 2020
+       *>     STOP ' '.
+       *>     GOBACK.
 
-       LEAVE-PARA.
-           DISPLAY SPACE AT 0101 WITH ERASE EOS.
-           OPEN INPUT LEAVEFILE.
-           DISPLAY "ENTER CODE :".
-           ACCEPT LEMPID.
+       *> LEAVE-PARA.
+       *>     DISPLAY SPACE AT 0101 WITH ERASE EOS.
+       *>     OPEN INPUT LEAVEFILE.
+       *>     DISPLAY "ENTER CODE :".
+       *>     ACCEPT LEMPID.
+       *>     DISPLAY SPACE AT 0101 WITH ERASE EOS.
+       *>     READ LEAVEFILE *> INVALID KEY GO TO ERROR-LEAVE-PARA.
+       *>     DISPLAY " CODE           :" LEMPID AT 0101.
+       *>     DISPLAY " DATE           :" LFMDATE AT 0201.
+       *>     DISPLAY " DATE           :" LTODATE AT 0301.
+       *>     DISPLAY " LEAVE CATEGORY :" LLEVCAT AT 0401.
+       *>     CLOSE LEAVEFILE.
+       *>     DISPLAY "PRESS ENTER TO RETURN TO HRMS READ MENU" AT 2010.
+       *>     STOP ' '.
+       *>     GOBACK.
            DISPLAY SPACE AT 0101 WITH ERASE EOS.
            READ LEAVEFILE *> INVALID KEY GO TO ERROR-LEAVE-PARA.
            DISPLAY " CODE           :" LEMPID AT 0101.
