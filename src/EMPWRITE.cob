@@ -250,9 +250,9 @@
        77 DES      PIC X(6).
        77 FS_MSG   PIC X(40).
 
-       77 CHOICE   PIC XX.
-       77 STUFF    PIC X(60).
-       77 WAITFOR  PIC X.
+       77 CHOICE     PIC XX.
+       77 STUFF      PIC X(60).
+       77 WAITFOR    PIC X.
        77 CRT-STATUS PIC 9(4).
 
        PROCEDURE DIVISION.

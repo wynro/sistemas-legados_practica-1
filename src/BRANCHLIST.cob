@@ -36,11 +36,11 @@
 
        77 GR     PIC 99.
 
-       77 I        PIC 99.
-       77 CITY     PIC X(3).
-       77 CITYT    PIC X(4).
-       77 NUMCITY  PIC 9.
-       77 CHOICE   PIC X.
+       77 I           PIC 99.
+       77 CITY        PIC X(3).
+       77 CITYT       PIC X(4).
+       77 NUMCITY     PIC 9.
+       77 CHOICE      PIC X.
        77 CRT-STATUS  PIC 9(4).
 
        PROCEDURE DIVISION.
@@ -104,9 +104,7 @@
               DISPLAY BEMAIL
                   AT LINE NUMBER I COLUMN NUMBER 76 END-DISPLAY
               DISPLAY BMGRNAME
-                  AT LINE NUMBER I COLUMN NUMBER 99
-                  WITH HIGHLIGHT
-                  END-DISPLAY
+                  AT LINE NUMBER I COLUMN NUMBER 99 END-DISPLAY
               ADD 1 TO I END-ADD
               IF I IS EQUAL TO 13
                   DISPLAY "F1: PREVIOUS    F2: NEXT    F3: RETURN"
@@ -121,13 +119,13 @@
                           EXIT PERFORM
                   END-EVALUATE
                   MOVE 3 TO I
-                     PERFORM 10 TIMES
-                         DISPLAY SPACES AT LINE NUMBER I
-                                 WITH ERASE EOL
-                         END-DISPLAY
-                         ADD 1 TO I
-                         END-ADD
-                     END-PERFORM
+                  PERFORM 10 TIMES
+                      DISPLAY SPACES AT LINE NUMBER I
+                          WITH ERASE EOL
+                      END-DISPLAY
+                      ADD 1 TO I
+                      END-ADD
+                  END-PERFORM
                   MOVE 3 TO I
                   EXIT PERFORM CYCLE
               END-IF
