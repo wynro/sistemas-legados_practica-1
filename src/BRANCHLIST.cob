@@ -2,6 +2,10 @@
        PROGRAM-ID. BRANCHLIST.
 
        ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+       SPECIAL-NAMES.
+           CRT STATUS IS CRT-STATUS.
+
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
 
@@ -37,6 +41,7 @@
        77 CITYT    PIC X(4).
        77 NUMCITY  PIC 9.
        77 CHOICE   PIC X.
+       77 CRT-STATUS  PIC 9(4).
 
        PROCEDURE DIVISION.
        MAIN-PARA.
@@ -104,11 +109,17 @@
                   END-DISPLAY
               ADD 1 TO I END-ADD
               IF I IS EQUAL TO 13
-                  DISPLAY "CONTINUE[Q to quit]" AT 1301 END-DISPLAY
-                  ACCEPT CHOICE AT 1320 END-ACCEPT
-                  IF CHOICE = 'Q' OR CHOICE = 'q'
-                      EXIT PERFORM
-                  END-IF
+                  DISPLAY "F1: PREVIOUS    F2: NEXT    F3: RETURN"
+                      AT 1401 END-DISPLAY
+                  ACCEPT CHOICE AT 1501 END-ACCEPT
+                  EVALUATE CRT-STATUS
+                      WHEN 1001
+                          DISPLAY "PREVIOUS PAGE NOT IMPLEMENTED (YET)"
+                              AT 1610
+                          END-DISPLAY
+                      WHEN 1003
+                          EXIT PERFORM
+                  END-EVALUATE
                   MOVE 3 TO I
                      PERFORM 10 TIMES
                          DISPLAY SPACES AT LINE NUMBER I
@@ -124,6 +135,7 @@
            *> REMEMBER CITADEL
            DISPLAY SPACES AT 1301 WITH ERASE EOL END-DISPLAY
            IF CHOICE NOT = 'Q' AND CHOICE NOT = 'q'
+                   AND CRT-STATUS NOT = 1003
                DISPLAY "RETURN TO MAIN MENU" AT 1301 END-DISPLAY
                ACCEPT CHOICE AT 1320 END-ACCEPT
            END-IF

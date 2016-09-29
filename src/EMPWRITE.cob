@@ -2,6 +2,10 @@
        PROGRAM-ID. EMPWRITE.
 
        ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+       SPECIAL-NAMES.
+           CRT STATUS IS CRT-STATUS.
+
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            *> PAGE 39
@@ -249,6 +253,7 @@
        77 CHOICE   PIC XX.
        77 STUFF    PIC X(60).
        77 WAITFOR  PIC X.
+       77 CRT-STATUS PIC 9(4).
 
        PROCEDURE DIVISION.
        MAIN-PARA.
@@ -274,17 +279,17 @@
            DISPLAY "12. EXIT" AT 2020.
            DISPLAY "ENTER YOUR CHOICE :" AT 2325.
            ACCEPT CHOICE AT 2345.
-           IF CHOICE = '3 '
+           IF CHOICE = '3 ' OR CRT-STATUS = 1003
                GO TO BRANCH-PARA
            ELSE
                COPY CLEAR-SCREEN.
                DISPLAY "Unimplemented option" AT 1010
-               ACCEPT STUFF AT 1110.
-           EXIT PROGRAM.
+               ACCEPT STUFF AT 1110
+           END-IF
            EXIT PROGRAM.
 
        BRANCH-PARA.
-           DISPLAY SPACE AT 0101 WITH ERASE EOS.
+           COPY CLEAR-SCREEN.
 
            DISPLAY "     BRANCH ID: ______" AT 0101
            DISPLAY "   BRANCH NAME: _______________" AT 0201
@@ -301,7 +306,6 @@
            ACCEPT BBRPH AT 0417 WITH UNDERLINE END-ACCEPT
            ACCEPT BEMAIL AT 0517 WITH UNDERLINE END-ACCEPT
            ACCEPT BMGRNAME AT 0617 WITH UNDERLINE END-ACCEPT
-           *> !TODO: SEARCH CRT-STATUS
            *>IF THE FILE DOES NOT EXIST,THIS FAILS !TODO: FIX!
            OPEN I-O BRANCHFILE.
    *>>D    COPY FS-MSG REPLACING STATUS BY FSB

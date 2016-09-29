@@ -2,6 +2,10 @@
        PROGRAM-ID. EMPREAD.
 
        ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+       SPECIAL-NAMES.
+           CRT STATUS IS CRT-STATUS.
+
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
            SELECT EMPFILE
@@ -246,6 +250,7 @@
        77 STUFF  PIC 9.
        77 FS_MSG PIC X(40).
        77 FS_MSG_AUX PIC X(40).
+       77 CRT-STATUS PIC 9(4).
 
        PROCEDURE DIVISION.
        MAIN-PARA.
@@ -276,7 +281,7 @@
            *> IF CHOICE = 2
            *>     GO TO LEAVE-PARA
            *> ELSE
-           IF CHOICE = '3 '
+           IF CHOICE = '3 ' OR CRT-STATUS = 1003
                GO TO BRANCH-PARA
            ELSE
            *> IF CHOICE = '04'
