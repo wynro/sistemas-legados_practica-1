@@ -242,29 +242,29 @@
 
        77 GR     PIC 99.
 
-       77 CHOICE PIC 99.
+       77 CHOICE PIC XX.
        77 STUFF  PIC 9.
        77 FS_MSG PIC X(40).
        77 FS_MSG_AUX PIC X(40).
 
        PROCEDURE DIVISION.
        MAIN-PARA.
-           DISPLAY SPACES AT 0101 WITH ERASE EOS.
+           COPY CLEAR-SCREEN.
            DISPLAY "*******************************************"
                AT 0310.
            DISPLAY "     HUMAN RESOURCE MANAGEMENT SYSTEM      "
                AT 0510.
            DISPLAY "*******************************************"
                AT 0710.
-           DISPLAY "01. EMPLOYEE FILE" AT 0920.
-           DISPLAY "02. LEAVE FILE" AT 1020.
-           DISPLAY "03. BRANCH FILE" AT 1120.
-           DISPLAY "04. DESIGNATION FILE" AT 1220.
-           DISPLAY "05. DEPARTMENT FILE" AT 1320.
-           DISPLAY "06. REVISION FILE" AT 1420.
-           DISPLAY "07. PAYMENT FILE" AT 1520.
-           DISPLAY "08. CONFIRMATION FILE" AT 1620.
-           DISPLAY "09. GRADE FILE" AT 1720.
+           DISPLAY " 1. EMPLOYEE FILE" AT 0920.
+           DISPLAY " 2. LEAVE FILE" AT 1020.
+           DISPLAY " 3. BRANCH FILE" AT 1120.
+           DISPLAY " 4. DESIGNATION FILE" AT 1220.
+           DISPLAY " 5. DEPARTMENT FILE" AT 1320.
+           DISPLAY " 6. REVISION FILE" AT 1420.
+           DISPLAY " 7. PAYMENT FILE" AT 1520.
+           DISPLAY " 8. CONFIRMATION FILE" AT 1620.
+           DISPLAY " 9. GRADE FILE" AT 1720.
            DISPLAY "10. TRANSFER FILE" AT 1820.
            DISPLAY "11. EMPLOYEE PERSONAL FILE" AT 1920.
            DISPLAY "12. EXIT" AT 2020.
@@ -276,12 +276,12 @@
            *> IF CHOICE = 2
            *>     GO TO LEAVE-PARA
            *> ELSE
-           IF CHOICE = 3
+           IF CHOICE = '3 '
                GO TO BRANCH-PARA
            ELSE
-           *> *> IF CHOICE = '04'
-           *> *>     GO TO DESIGNATION-PARA
-           *> *> ELSE
+           *> IF CHOICE = '04'
+           *>     GO TO DESIGNATION-PARA
+           *> ELSE
            *> IF CHOICE = 5
            *>     GO TO DEPARTMENT-PARA
            *> ELSE
@@ -303,17 +303,17 @@
            *> IF CHOICE = 11
            *>     GO TO EMPPERSONAL-PARA
            *> ELSE
-               DISPLAY SPACES AT 0101 WITH ERASE EOS.
+               COPY CLEAR-SCREEN.
                DISPLAY "Unimplemented option" AT 1010
                ACCEPT STUFF AT 1110.
            EXIT PROGRAM.
 
        *> EMP-PARA.
-       *>     DISPLAY SPACES AT 0101 WITH ERASE EOS
+       *>     COPY CLEAR-SCREEN.
        *>     OPEN INPUT EMPFILE
        *>     DISPLAY "ENTER CODE :"
        *>     ACCEPT EEMPID
-       *>     DISPLAY SPACES AT 0101 WITH ERASE EOS
+       *>     COPY CLEAR-SCREEN.
        *>     READ EMPFILE RECORD INTO EMPREC
        *>     DISPLAY " CODE                 :" EEMPID AT 0101
        *>     DISPLAY " NAME                 :" EEMPNAME AT 0201

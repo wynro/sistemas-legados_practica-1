@@ -1,0 +1,32 @@
+#!/bin/sh
+# Author: Guillermo Robles
+#
+# Create a fuckton of branches
+
+echo "           OPEN I-O BRANCHFILE."
+echo "   *>>D    COPY FS-MSG REPLACING STATUS BY FSB"
+echo "   *>>D                          MSG    BY FS_MSG."
+echo "   *>>D    STRING \"OPEN I-O BRANCHFILE.: \" FS_MSG INTO STUFF."
+echo "   *>>D    DISPLAY STUFF AT 3099."
+
+for i in `seq 1235 2147`; do
+    echo "           MOVE '$(printf %06d $i)' TO BBRID."
+    echo "           MOVE 'BRANCH$(printf %02d $i)' TO BBRNAME."
+    echo "           MOVE 'UNOWN SYMBOL $(printf %02d $i)' TO BBRADD."
+    echo "           MOVE '????$(printf %02d $i)????' TO BBRPH."
+    echo "           MOVE 'BR$(printf %02d $i)@example.com' TO BEMAIL."
+    echo "           MOVE 'STEVEN MOFFAT No$(printf %02d $i)' TO BMGRNAME."
+    echo "           WRITE BRANCHREC."
+    echo "   *>>D    COPY FS-MSG REPLACING STATUS BY FSB"
+    echo "   *>>D                          MSG    BY FS_MSG."
+    echo "   *>>D    STRING \"($(printf %02d $i))WRITE BRANCHREC.: \" FS_MSG INTO STUFF."
+    echo "   *>>D    DISPLAY STUFF AT $(printf %02d $i)99."
+    echo ""
+done
+
+echo 
+echo "           CLOSE BRANCHFILE."
+echo "   *>>D    COPY FS-MSG REPLACING STATUS BY FSB"
+echo "   *>>D                          MSG    BY FS_MSG."
+echo "   *>>D    STRING \"CLOSE BRANCHFILE.: \" FS_MSG INTO STUFF."
+echo "   *>>D    DISPLAY STUFF AT 3099."

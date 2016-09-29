@@ -4,6 +4,7 @@
        ENVIRONMENT DIVISION.
        INPUT-OUTPUT SECTION.
        FILE-CONTROL.
+           *> PAGE 39
            SELECT EMPFILE
                *> Create file definition and assign it to a
                *> specific path
@@ -245,37 +246,68 @@
        77 DES      PIC X(6).
        77 FS_MSG   PIC X(40).
 
-       77 CHOICE   PIC 99.
+       77 CHOICE   PIC XX.
        77 STUFF    PIC X(60).
+       77 WAITFOR  PIC X.
 
        PROCEDURE DIVISION.
        MAIN-PARA.
-           DISPLAY SPACES AT 0101 WITH ERASE EOS.
-           GO TO BRANCH-PARA.
+           COPY CLEAR-SCREEN.
+           COPY CLEAR-SCREEN.
+           DISPLAY "*******************************************"
+               AT 0310.
+           DISPLAY "     HUMAN RESOURCE MANAGEMENT SYSTEM      "
+               AT 0510.
+           DISPLAY "*******************************************"
+               AT 0710.
+           DISPLAY " 1. EMPLOYEE FILE" AT 0920.
+           DISPLAY " 2. LEAVE FILE" AT 1020.
+           DISPLAY " 3. BRANCH FILE" AT 1120.
+           DISPLAY " 4. DESIGNATION FILE" AT 1220.
+           DISPLAY " 5. DEPARTMENT FILE" AT 1320.
+           DISPLAY " 6. REVISION FILE" AT 1420.
+           DISPLAY " 7. PAYMENT FILE" AT 1520.
+           DISPLAY " 8. CONFIRMATION FILE" AT 1620.
+           DISPLAY " 9. GRADE FILE" AT 1720.
+           DISPLAY "10. TRANSFER FILE" AT 1820.
+           DISPLAY "11. EMPLOYEE PERSONAL FILE" AT 1920.
+           DISPLAY "12. EXIT" AT 2020.
+           DISPLAY "ENTER YOUR CHOICE :" AT 2325.
+           ACCEPT CHOICE AT 2345.
+           IF CHOICE = '3 '
+               GO TO BRANCH-PARA
+           ELSE
+               COPY CLEAR-SCREEN.
+               DISPLAY "Unimplemented option" AT 1010
+               ACCEPT STUFF AT 1110.
+           EXIT PROGRAM.
            EXIT PROGRAM.
 
        BRANCH-PARA.
            DISPLAY SPACE AT 0101 WITH ERASE EOS.
-           *>If the file does not exist,this fails !TODO: FIX!
+
+           DISPLAY "     BRANCH ID: ______" AT 0101
+           DISPLAY "   BRANCH NAME: _______________" AT 0201
+           DISPLAY "    BRANCH ADD: ______________________________"
+               AT 0301 *> !TODO: Find meaning
+           DISPLAY "     BRANCH PH: __________"
+               AT 0401 *> !TODO: Find meaning
+           DISPLAY "   BRANCH MAIL: ____________________" AT 0501
+           DISPLAY "BRANCH MGRNAME: _________________________" AT 0601
+
+           ACCEPT BBRID AT 0117 WITH UNDERLINE END-ACCEPT
+           ACCEPT BBRNAME AT 0217 WITH UNDERLINE END-ACCEPT
+           ACCEPT BBRADD AT 0317 WITH UNDERLINE END-ACCEPT
+           ACCEPT BBRPH AT 0417 WITH UNDERLINE END-ACCEPT
+           ACCEPT BEMAIL AT 0517 WITH UNDERLINE END-ACCEPT
+           ACCEPT BMGRNAME AT 0617 WITH UNDERLINE END-ACCEPT
+           *> !TODO: SEARCH CRT-STATUS
+           *>IF THE FILE DOES NOT EXIST,THIS FAILS !TODO: FIX!
            OPEN I-O BRANCHFILE.
    *>>D    COPY FS-MSG REPLACING STATUS BY FSB
    *>>D                          MSG    BY FS_MSG.
    *>>D    STRING "OPEN I-O BRANCHFILE.: " FS_MSG INTO STUFF.
    *>>D    DISPLAY STUFF AT 3099.
-
-           DISPLAY "     BRANCH ID:" AT 0101
-           DISPLAY "   BRANCH NAME:" AT 0201
-           DISPLAY "    BRANCH ADD:" AT 0301 *> !TODO: Find meaning
-           DISPLAY "     BRANCH PH:" AT 0401 *> !TODO: Find meaning
-           DISPLAY "   BRANCH MAIL:" AT 0501
-           DISPLAY "BRANCH MGRNAME:" AT 0601
-
-           ACCEPT BBRID AT 0117.
-           ACCEPT BBRNAME AT 0217.
-           ACCEPT BBRADD AT 0317.
-           ACCEPT BBRPH AT 0417.
-           ACCEPT BEMAIL AT 0517.
-           ACCEPT BMGRNAME AT 0617.
 
            WRITE BRANCHREC.
    *>>D    COPY FS-MSG REPLACING STATUS BY FSB
@@ -290,7 +322,7 @@
    *>>D    DISPLAY STUFF AT 3299.
 
            DISPLAY "CONTINUE" AT 0701.
-           ACCEPT STUFF AT 0709.
+           ACCEPT WAITFOR AT 0709.
            STOP ' '.
            GOBACK.
 
