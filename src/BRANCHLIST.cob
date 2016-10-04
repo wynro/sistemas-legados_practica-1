@@ -118,35 +118,21 @@
                   AT LINE NUMBER I COLUMN NUMBER 76 END-DISPLAY
               DISPLAY BMGRNAME
                   AT LINE NUMBER I COLUMN NUMBER 99 END-DISPLAY
-              IF PAGINATION-DIR = "F"
-                  ADD 1 TO I END-ADD
-              ELSE
-                  SUBTRACT 1 FROM I END-SUBTRACT
-              END-IF
-              IF I = I-FINAL
-                  DISPLAY "F1: PREVIOUS    F2: NEXT    F3: RETURN"
+              ADD 1 TO I END-ADD
+              IF I IS EQUAL TO 13
+                  DISPLAY "F1: NEXT    F2: RETURN"
                       AT 1401 END-DISPLAY
                   ACCEPT CHOICE AT 1501 END-ACCEPT
                   EVALUATE CRT-STATUS
                       WHEN 1001
-                          MOVE "B" TO PAGINATION-DIR
-                          *> DISPLAY "PREVIOUS PAGE NOT IMPLEMENTED (YET)"
-                          *>     AT 1610
-                          *> END-DISPLAY
+                          CONTINUE
                       WHEN 1002
-                          MOVE "F" TO PAGINATION-DIR
-                      WHEN 1003
                           EXIT PERFORM
                   END-EVALUATE
-                  MOVE I-INITIAL TO I
-                  PERFORM 10 TIMES
-                      DISPLAY SPACES AT LINE NUMBER I
-                          WITH ERASE EOL
-                      END-DISPLAY
-                      ADD 1 TO I
-                      END-ADD
-                  END-PERFORM
-                  MOVE I-FINAL TO I
+                  *> CLEAR LINES
+                  DISPLAY SPACES AT LINE NUMBER 3
+                      WITH ERASE EOS END-DISPLAY
+                  MOVE 3 TO I
                   EXIT PERFORM CYCLE
               END-IF
            END-PERFORM

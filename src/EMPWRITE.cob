@@ -305,14 +305,14 @@
            IF CHOICE = '9 ' OR CHOICE = '09' OR CRT-STATUS = 1009
                GO TO GRADE-PARA
            ELSE
-           IF CHOICE = '10' OR CHOICE = '10' OR CRT-STATUS = 1010
+           IF CHOICE = '10' OR CRT-STATUS = 1010
                GO TO TRANSFER-PARA
            ELSE
-           IF CHOICE = '11' OR CHOICE = '11' OR CRT-STATUS = 1011
+           IF CHOICE = '11' OR CRT-STATUS = 1011
                GO TO EMPPERSONAL-PARA
            ELSE
                COPY CLEAR-SCREEN.
-               DISPLAY "Unimplemented option" AT 1010
+               DISPLAY "UNIMPLEMENTED OPTION" AT 1010
                ACCEPT STUFF AT 1110
            END-IF
            EXIT PROGRAM.
