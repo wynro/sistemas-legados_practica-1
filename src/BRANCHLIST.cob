@@ -41,6 +41,9 @@
        77 CITYT       PIC X(4).
        77 NUMCITY     PIC 9.
        77 CHOICE      PIC X.
+       77 PAGINATION-DIR       PIC X.
+       77 I-INITIAL    PIC 99.
+       77 I-FINAL      PIC 99.
        77 CRT-STATUS  PIC 9(4).
 
        PROCEDURE DIVISION.
@@ -66,12 +69,22 @@
            DISPLAY "|                  BMGRNAME |" AT 0197 END-DISPLAY
            DISPLAY "+---------------------------|" AT 0297 END-DISPLAY
 
-           MOVE 3 TO I.
+           MOVE 03 TO I-INITIAL.
+           MOVE 13 TO I-FINAL.
+           MOVE I-INITIAL TO I.
+           MOVE "F" TO PAGINATION-DIR.
            PERFORM FOREVER
-              READ BRANCHFILE NEXT RECORD
-                 INTO BRANCHREC
-                 AT END EXIT PERFORM
-              END-READ
+              IF PAGINATION-DIR = "F"
+                  READ BRANCHFILE NEXT RECORD
+                      INTO BRANCHREC
+                      AT END EXIT PERFORM
+                  END-READ
+              ELSE
+                  READ BRANCHFILE PREVIOUS RECORD
+                      INTO BRANCHREC
+                      AT END EXIT PERFORM
+                  END-READ
+              END-IF
 
               IF CITY NOT EQUALS '   '
                   MOVE 0 TO NUMCITY
@@ -105,20 +118,27 @@
                   AT LINE NUMBER I COLUMN NUMBER 76 END-DISPLAY
               DISPLAY BMGRNAME
                   AT LINE NUMBER I COLUMN NUMBER 99 END-DISPLAY
-              ADD 1 TO I END-ADD
-              IF I IS EQUAL TO 13
+              IF PAGINATION-DIR = "F"
+                  ADD 1 TO I END-ADD
+              ELSE
+                  SUBTRACT 1 FROM I END-SUBTRACT
+              END-IF
+              IF I = I-FINAL
                   DISPLAY "F1: PREVIOUS    F2: NEXT    F3: RETURN"
                       AT 1401 END-DISPLAY
                   ACCEPT CHOICE AT 1501 END-ACCEPT
                   EVALUATE CRT-STATUS
                       WHEN 1001
-                          DISPLAY "PREVIOUS PAGE NOT IMPLEMENTED (YET)"
-                              AT 1610
-                          END-DISPLAY
+                          MOVE "B" TO PAGINATION-DIR
+                          *> DISPLAY "PREVIOUS PAGE NOT IMPLEMENTED (YET)"
+                          *>     AT 1610
+                          *> END-DISPLAY
+                      WHEN 1002
+                          MOVE "F" TO PAGINATION-DIR
                       WHEN 1003
                           EXIT PERFORM
                   END-EVALUATE
-                  MOVE 3 TO I
+                  MOVE I-INITIAL TO I
                   PERFORM 10 TIMES
                       DISPLAY SPACES AT LINE NUMBER I
                           WITH ERASE EOL
@@ -126,7 +146,7 @@
                       ADD 1 TO I
                       END-ADD
                   END-PERFORM
-                  MOVE 3 TO I
+                  MOVE I-FINAL TO I
                   EXIT PERFORM CYCLE
               END-IF
            END-PERFORM
