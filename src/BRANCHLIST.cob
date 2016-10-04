@@ -107,25 +107,18 @@
                   AT LINE NUMBER I COLUMN NUMBER 99 END-DISPLAY
               ADD 1 TO I END-ADD
               IF I IS EQUAL TO 13
-                  DISPLAY "F1: PREVIOUS    F2: NEXT    F3: RETURN"
+                  DISPLAY "F1: NEXT    F2: RETURN"
                       AT 1401 END-DISPLAY
                   ACCEPT CHOICE AT 1501 END-ACCEPT
                   EVALUATE CRT-STATUS
                       WHEN 1001
-                          DISPLAY "PREVIOUS PAGE NOT IMPLEMENTED (YET)"
-                              AT 1610
-                          END-DISPLAY
-                      WHEN 1003
+                          CONTINUE
+                      WHEN 1002
                           EXIT PERFORM
                   END-EVALUATE
-                  MOVE 3 TO I
-                  PERFORM 10 TIMES
-                      DISPLAY SPACES AT LINE NUMBER I
-                          WITH ERASE EOL
-                      END-DISPLAY
-                      ADD 1 TO I
-                      END-ADD
-                  END-PERFORM
+                  *> CLEAR LINES
+                  DISPLAY SPACES AT LINE NUMBER 3
+                      WITH ERASE EOS END-DISPLAY
                   MOVE 3 TO I
                   EXIT PERFORM CYCLE
               END-IF
