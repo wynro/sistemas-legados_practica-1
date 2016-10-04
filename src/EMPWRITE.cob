@@ -21,7 +21,7 @@
                *> The field of the file that will index it
                RECORD KEY IS EEMPID
                *> Special variable that will contain the status of the file
-               FILE STATUS IS FSE.
+               FILE STATUS IS FSO.
 
            SELECT LEAVEFILE
                ASSIGN TO "files/LEAVE.DAT"
@@ -235,7 +235,7 @@
 
        WORKING-STORAGE SECTION.
 
-       77 FSE   PIC XX.
+       77 FSO   PIC XX.
        77 FSL   PIC XX.
        77 FSB   PIC XX.
        77 FSDES PIC XX.
@@ -258,7 +258,6 @@
        PROCEDURE DIVISION.
        MAIN-PARA.
            COPY CLEAR-SCREEN.
-           COPY CLEAR-SCREEN.
            DISPLAY "*******************************************"
                AT 0310.
            DISPLAY "     HUMAN RESOURCE MANAGEMENT SYSTEM      "
@@ -279,8 +278,38 @@
            DISPLAY "12. EXIT" AT 2020.
            DISPLAY "ENTER YOUR CHOICE :" AT 2325.
            ACCEPT CHOICE AT 2345.
-           IF CHOICE = '3 ' OR CRT-STATUS = 1003
+           IF CHOICE = '1 ' OR CHOICE = '01' OR CRT-STATUS = 1001
+              GO TO EMP-PARA
+           ELSE
+           IF CHOICE = '2 ' OR CHOICE = '02' OR CRT-STATUS = 1002
+               GO TO LEAVE-PARA
+           ELSE
+           IF CHOICE = '3 ' OR CHOICE = '03' OR CRT-STATUS = 1003
                GO TO BRANCH-PARA
+           ELSE
+           IF CHOICE = '4 ' OR CHOICE = '04' OR CRT-STATUS = 1004
+               GO TO DESIGNATION-PARA
+           ELSE
+           IF CHOICE = '5 ' OR CHOICE = '05' OR CRT-STATUS = 1005
+               GO TO DEPARTMENT-PARA
+           ELSE
+           IF CHOICE = '6 ' OR CHOICE = '06' OR CRT-STATUS = 1006
+               GO TO REVISION-PARA
+           ELSE
+           IF CHOICE = '7 ' OR CHOICE = '07' OR CRT-STATUS = 1007
+               GO TO PAYMENT-PARA
+           ELSE
+           IF CHOICE = '8 ' OR CHOICE = '08' OR CRT-STATUS = 1008
+               GO TO CONFIRMATION-PARA
+           ELSE
+           IF CHOICE = '9 ' OR CHOICE = '09' OR CRT-STATUS = 1009
+               GO TO GRADE-PARA
+           ELSE
+           IF CHOICE = '10' OR CHOICE = '10' OR CRT-STATUS = 1010
+               GO TO TRANSFER-PARA
+           ELSE
+           IF CHOICE = '11' OR CHOICE = '11' OR CRT-STATUS = 1011
+               GO TO EMPPERSONAL-PARA
            ELSE
                COPY CLEAR-SCREEN.
                DISPLAY "Unimplemented option" AT 1010
@@ -291,21 +320,23 @@
        BRANCH-PARA.
            COPY CLEAR-SCREEN.
 
-           DISPLAY "     BRANCH ID: ______" AT 0101
-           DISPLAY "   BRANCH NAME: _______________" AT 0201
-           DISPLAY "    BRANCH ADD: ______________________________"
+           DISPLAY "   ENTER BRANCH CODE: ______" AT 0101
+           DISPLAY "   ENTER BRANCH NAME: _______________" AT 0201
+           DISPLAY "ENTER BRANCH ADDRESS: _____________________________"
                AT 0301 *> !TODO: Find meaning
-           DISPLAY "     BRANCH PH: __________"
+           DISPLAY "         ENTER PHONE: __________"
                AT 0401 *> !TODO: Find meaning
-           DISPLAY "   BRANCH MAIL: ____________________" AT 0501
-           DISPLAY "BRANCH MGRNAME: _________________________" AT 0601
+           DISPLAY "        ENTER E-MAIL: ____________________"
+               AT 0501
+           DISPLAY "  ENTER MANAGER NAME: _________________________"
+               AT 0601
 
-           ACCEPT BBRID AT 0117 WITH UNDERLINE END-ACCEPT
-           ACCEPT BBRNAME AT 0217 WITH UNDERLINE END-ACCEPT
-           ACCEPT BBRADD AT 0317 WITH UNDERLINE END-ACCEPT
-           ACCEPT BBRPH AT 0417 WITH UNDERLINE END-ACCEPT
-           ACCEPT BEMAIL AT 0517 WITH UNDERLINE END-ACCEPT
-           ACCEPT BMGRNAME AT 0617 WITH UNDERLINE END-ACCEPT
+           ACCEPT BBRID AT 0123 WITH UNDERLINE END-ACCEPT
+           ACCEPT BBRNAME AT 0223 WITH UNDERLINE END-ACCEPT
+           ACCEPT BBRADD AT 0323 WITH UNDERLINE END-ACCEPT
+           ACCEPT BBRPH AT 0423 WITH UNDERLINE END-ACCEPT
+           ACCEPT BEMAIL AT 0523 WITH UNDERLINE END-ACCEPT
+           ACCEPT BMGRNAME AT 0623 WITH UNDERLINE END-ACCEPT
            *>IF THE FILE DOES NOT EXIST,THIS FAILS !TODO: FIX!
            OPEN I-O BRANCHFILE.
    *>>D    COPY FS-MSG REPLACING STATUS BY FSB
@@ -329,5 +360,303 @@
            ACCEPT WAITFOR AT 0709.
            STOP ' '.
            GOBACK.
+
+
+       EMP-PARA.
+           COPY CLEAR-SCREEN.
+           OPEN I-O EMPFILE.
+           IF FSO = 30
+               OPEN OUTPUT EMPFILE
+           END-IF
+           DISPLAY "ENTER CODE :" AT 0101.
+           ACCEPT EEMPID AT 0135.
+           DISPLAY "ENTER NAME :" AT 0201.
+           ACCEPT EEMPNAME AT 0235.
+           DISPLAY "ENTER ADDRESS :" AT 0301.
+           ACCEPT EEMPADDR AT 0335.
+           DISPLAY "ENTER PHONE :" AT 0401.
+           ACCEPT EPHONE AT 0435.
+           DISPLAY "ENTER DATE OF JOIN :" AT 0501.
+           ACCEPT EDOJ AT 0535.
+           DISPLAY "ENTER DIPLOMA :" AT 0601.
+           ACCEPT EDIP AT 0635.
+           DISPLAY "ENTER UG :" AT 0701.
+           ACCEPT EUG AT 0735.
+           DISPLAY "ENTER PG :" AT 0801.
+           ACCEPT EPG AT 0835.
+           DISPLAY "ENTER PROFESSIONAL QUALITY :" AT 0901.
+           ACCEPT EPROFQ AT 0935.
+           DISPLAY "ENTER SKILL SET :" AT 1001.
+           ACCEPT ESKILL AT 1035.
+           DISPLAY "ENTER GRADE NUMBER :" AT 1101.
+           ACCEPT EGRDNO AT 1135.
+           DISPLAY "ENTER BRANCH CODE :" AT 1201.
+           ACCEPT EBRNID AT 1235.
+           DISPLAY "ENTER DESIGNATION CODE :" AT 1301.
+           ACCEPT EDESID AT 1335.
+           WRITE EMPREC.
+           CLOSE EMPFILE.
+           GO TO MAIN-PARA.
+
+       LEAVE-PARA.
+           COPY CLEAR-SCREEN.
+           OPEN I-O LEAVEFILE.
+           IF FSL = 30
+               OPEN OUTPUT LEAVEFILE
+           END-IF
+           DISPLAY  "ENTER CODE :" AT 0101.
+           ACCEPT LEMPID AT 0135.
+           DISPLAY "ENTER FROM DATE :" 0201.
+           ACCEPT LFMDATE AT 0235.
+           DISPLAY "ENTER TO DATE :" 0301.
+           ACCEPT LTODATE AT 0335.
+           DISPLAY "ENTER LEAVE CATEGORY :" 0401.
+           ACCEPT LLEVCAT AT 0435.
+           WRITE LEAVEREC.
+           CLOSE LEAVEFILE.
+           GO TO MAIN-PARA.
+
+       DESIGNATION-PARA.
+           COPY CLEAR-SCREEN.
+           OPEN EXTEND DESIGNATIONFILE.
+           DISPLAY "ENTER DESIGNATION CODE :" AT 0101.
+           ACCEPT DESID AT 0135.
+           DISPLAY "ENTER DESIGNATION :" AT 0201.
+           ACCEPT DESIGN AT 0235.
+           DISPLAY "ENTER DES IN SHORT :" AT 0301.
+           ACCEPT DESHRT AT 0335.
+           WRITE DESIGNATIONREC.
+           CLOSE DESIGNATIONFILE.
+           GO TO MAIN-PARA.
+
+       DEPARTMENT-PARA.
+           COPY CLEAR-SCREEN.
+           OPEN I-O DEPARTMENTFILE.
+           IF FSDEP = 30
+               OPEN OUTPUT DEPARTMENTFILE
+           END-IF
+           DISPLAY "ENTER DEPARTMENT CODE :" AT 0101.
+           ACCEPT DEPCODE AT 0135.
+           DISPLAY "ENTER DEPARTMENT NAME :" AT 0201.
+           ACCEPT DEPNAME AT 0235.
+           WRITE DEPARTMENTREC.
+           CLOSE DEPARTMENTFILE.
+           GO TO MAIN-PARA.
+
+       REVISION-PARA.
+           COPY CLEAR-SCREEN.
+           OPEN I-O REVISIONFILE.
+           IF FSR = 30
+               OPEN OUTPUT REVISIONFILE
+           END-IF
+           DISPLAY "ENTER REVISION CODE :" AT 0101.
+           ACCEPT RREVID AT 0135.
+           DISPLAY "ENTER EMPLOYEE CODE :" AT 0201.
+           ACCEPT REMPID AT 0235.
+           DISPLAY "ENTER DESIGNATION CODE :" AT 0301.
+           ACCEPT RDESCODE AT 0335.
+           DISPLAY "ENTER BASIC :" AT 0401.
+           ACCEPT RBASIC AT 0435.
+           DISPLAY "ENTER HRA :" AT 0501.
+           ACCEPT RHRA AT 0535.
+           DISPLAY "ENTER DPA :" AT 0601.
+           ACCEPT RDPA AT 0635.
+           DISPLAY "ENTER PPA :" AT 0701.
+           ACCEPT RPPA AT 0735.
+           DISPLAY "ENTER EDUCATIONAL ALLOWANCE :" AT 0801.
+           ACCEPT REDUA AT 0835.
+           DISPLAY "ENTER TECH. JOURNAL :" AT 0901.
+           ACCEPT RTECHJR AT 0935.
+           DISPLAY "ENTER LUNCH ALLOWANCE :" AT 1001.
+           ACCEPT RLUNCHA AT 3510.
+           DISPLAY "ENTER CONVEYANCE :" AT 1101.
+           ACCEPT RCONVEY AT 3511.
+           DISPLAY "ENTER BUSINESS ATTIREMENT :" AT 1201.
+           ACCEPT RBUSATR AT 3512.
+           DISPLAY "ENTER LEAVE TRAVEL ALLOWANCE :" AT 1301.
+           ACCEPT RLTA AT 3513.
+           DISPLAY "ENTER PF :" AT 1401.
+           ACCEPT RPF AT 3514.
+           DISPLAY "ENTER ESI :" AT 1501.
+           ACCEPT RESI AT 3515.
+           DISPLAY "ENTER REVISED DATE :" AT 1601.
+           ACCEPT RREVDATE AT 3516.
+           WRITE REVISIONREC.
+           CLOSE REVISIONFILE.
+           GO TO MAIN-PARA.
+
+       PAYMENT-PARA.
+           COPY CLEAR-SCREEN.
+           OPEN I-O PAYMENTFILE.
+           IF FSP = 30
+               OPEN OUTPUT PAYMENTFILE
+           END-IF
+           DISPLAY "ENTER EMPLOYEE CODE :" AT 0101.
+           ACCEPT PEMPID AT 0135.
+           DISPLAY "ENTER BASIC :" AT 0201.
+           ACCEPT PBASIC AT 0235.
+           DISPLAY "ENTER DA :" AT 0301.
+           ACCEPT PDA AT 0335.
+           DISPLAY "ENTER CCA :" AT 0401.
+           ACCEPT PCCA AT 0435.
+           DISPLAY "ENTER HRA :" AT 0501.
+           ACCEPT PHRA AT 0535.
+           DISPLAY "ENTER DPA :" AT 0601.
+           ACCEPT PDPA AT 0635.
+           DISPLAY "ENTER PPA :" AT 0701.
+           ACCEPT PPPA AT 0735.
+           DISPLAY "ENTER EDUCATIONAL ALLOWANCE :" AT 0801.
+           ACCEPT PEDUA AT 0835.
+           DISPLAY "ENTER TECH. JOURNAL :" AT 0901.
+           ACCEPT PTECHJR AT 0935.
+           DISPLAY "ENTER LUNCH ALLOWANCE :" AT 1001.
+           ACCEPT PLUNCHA AT 1035.
+           DISPLAY "ENTER CONVEYANCE :" AT 1101.
+           ACCEPT PCONVEY AT 1135.
+           DISPLAY "ENTER BUSINESS ATTIREMENT :" AT 1201.
+           ACCEPT PBUSATR AT 1235.
+           DISPLAY "ENTER LEAVE TRAVEL ALLOWANCE :" AT 1301.
+           ACCEPT PLTA AT 1335.
+           DISPLAY "ENTER PF :" AT 1401.
+           ACCEPT PPF AT 1435.
+           DISPLAY "ENTER ESI :" AT 1501.
+           ACCEPT PESI AT 1535.
+           DISPLAY "ENTER GRATUITY :" AT 1601.
+           ACCEPT PGRTY AT 1635.
+           DISPLAY "ENTER PROFESSIONAL TAX :" AT 1701.
+           ACCEPT PPTAX AT 1735.
+           DISPLAY "ENTER INCOME TAX :" AT 1801.
+           ACCEPT PITAX AT 1835.
+           DISPLAY "ENTER LOAN :" AT 1901.
+           ACCEPT PLOAN AT 1935.
+           DISPLAY "ENTER LOAN DEDUCTION AMOUNT :" AT 2001.
+           ACCEPT PLOANDA AT 1035.
+           DISPLAY "ENTER OTHER DEDUCTION :" AT 2101.
+           ACCEPT POTHERD AT 1135.
+           DISPLAY "ENTER PERFORMANCE INCENTIVE :" AT 2201.
+           ACCEPT PPERINC AT 1235.
+           DISPLAY "ENTER MEDICAL REIMBURSEMENT :" AT 2301.
+           ACCEPT PMEDI AT 1335.
+           DISPLAY "ENTER BOOK REIMBURSEMENT :" AT 2401.
+           ACCEPT PBOOK AT 1435.
+           COPY CLEAR-SCREEN.
+           DISPLAY "ENTER ENTERTAINMENT :" AT 0101.
+           ACCEPT PENTER AT 0135.
+           DISPLAY "ENTER PHONE :" AT 0201.
+           ACCEPT PTPH AT 0235.
+           DISPLAY "ENTER HOUSE RELATED :" AT 0301.
+           ACCEPT PHOUSE AT 0335.
+           DISPLAY "ENTER VEHICLE MAINTENANCE :" AT 0401.
+           ACCEPT PVEHMAN AT 0435.
+           DISPLAY "ENTER CREDIT CARD :" AT 0501.
+           ACCEPT PCREDIT AT 0535.
+           DISPLAY "ENTER CLUB :" AT 0601.
+           ACCEPT PCLUB AT 0635.
+           DISPLAY "ENTER CLUB :" AT 0701.
+           ACCEPT PCLUB AT 0735.
+           DISPLAY "ENTER CLUB :" AT 0801.
+           ACCEPT PCLUB AT 0835.
+           DISPLAY "ENTER CASUAL LEAVE :" AT 0901.
+           ACCEPT PCL AT 0935.
+           DISPLAY "ENTER SICK LEAVE :" AT 1001.
+           ACCEPT PSL AT 1035.
+           DISPLAY "ENTER PAID LEAVE :" AT 1101.
+           ACCEPT PPL AT 1135.
+           DISPLAY "ENTER LEAVE LOSS OF PAY :" AT 1201.
+           ACCEPT PLLOP AT 1235.
+           DISPLAY "ENTER OTHER LEAVES :" AT 1301.
+           ACCEPT POTHERL AT 1335.
+           WRITE PAYMENTREC.
+           CLOSE PAYMENTFILE.
+           GO TO MAIN-PARA.
+
+       CONFIRMATION-PARA.
+           COPY CLEAR-SCREEN.
+           OPEN I-O CONFIRMATIONFILE.
+           IF FSC = 30
+               OPEN OUTPUT CONFIRMATIONFILE
+           END-IF
+           DISPLAY "ENTER CONFIRMATION CODE :" AT 0101.
+           ACCEPT CCONID AT 0135.
+           DISPLAY "ENTER EMP CODE :" AT 0201.
+           ACCEPT CEMPID AT 0235.
+           DISPLAY "ENTER CONFIRMATION DATE :" AT 0301.
+           ACCEPT CCDATE AT 0335.
+           WRITE CONFIRMATIONREC.
+           CLOSE CONFIRMATIONFILE.
+           GO TO MAIN-PARA.
+
+       GRADE-PARA.
+           COPY CLEAR-SCREEN.
+           OPEN EXTEND GRADEFILE.
+           DISPLAY "ENTER GRADE NO. :" AT 0101.
+           ACCEPT GGRADE AT 0135.
+           DISPLAY "ENTER DESIGNATION :" AT 0201.
+           ACCEPT GDESIGN AT 0235.
+           WRITE GRADEREC.
+           CLOSE GRADEFILE.
+           GO TO MAIN-PARA.
+
+       TRANSFER-PARA.
+           COPY CLEAR-SCREEN.
+           OPEN I-O TRANSFERFILE.
+           IF FST = 30
+               OPEN OUTPUT TRANSFERFILE
+           END-IF
+           DISPLAY "ENTER TRANSFER CODE :" AT 0101.
+           ACCEPT TTRFID AT 0135.
+           DISPLAY "ENTER EMP CODE :" AT 0201.
+           ACCEPT TEMPID AT 0235.
+           DISPLAY "ENTER OLD BRANCH CODE :" AT 0301.
+           ACCEPT TOBRID AT 0335.
+           DISPLAY "ENTER TRANSFER DATE :" AT 0401.
+           ACCEPT TTRFDT AT 0435.
+           WRITE TRANSFERREC.
+           CLOSE TRANSFERFILE.
+           GO TO MAIN-PARA.
+
+       EMPPERSONAL-PARA.
+           COPY CLEAR-SCREEN.
+           OPEN I-O EMPPERSONALFILE.
+           IF FSEP = 30
+               OPEN OUTPUT EMPPERSONALFILE
+           END-IF
+           DISPLAY "ENTER EMP CODE :" AT 0101.
+           ACCEPT EPEMPID AT 0135.
+           DISPLAY "ENTER TEMP ADDRESS :" AT 0201.
+           ACCEPT EPTADD AT 0235.
+           DISPLAY "ENTER PHONE :" AT 0301.
+           ACCEPT EPTPH AT 0335.
+           DISPLAY "ENTER DOB :" AT 0401.
+           ACCEPT EPDOB AT 0435.
+           DISPLAY "ENTER POB :" AT 0501.
+           ACCEPT EPPOB AT 0535.
+           DISPLAY "ENTER LANGUAGE KNOWN :" AT 0601.
+           ACCEPT EPLANG AT 0635.
+           DISPLAY "ENTER BLOOD GROUP :" AT 0701.
+           ACCEPT EPBLOOD AT 0735.
+           DISPLAY "ENTER WEIGHT :" AT 0801.
+           ACCEPT EPWEIGHT AT 0835.
+           DISPLAY "ENTER HEIGHT :" AT 0901.
+           ACCEPT EPHEIGHT AT 0935.
+           DISPLAY "ENTER VISION :" AT 1001.
+           ACCEPT EPVISION AT 1035.
+           DISPLAY "ENTER FATHER'S NAME :" AT 1101.
+           ACCEPT EPFATHER AT 1135.
+           DISPLAY "ENTER DOB OF FATHER :" AT 1201.
+           ACCEPT EPDOBF AT 1235.
+           DISPLAY "ENTER MOTHER'S NAME :" AT 1301.
+           ACCEPT EPMOTHER AT 1335.
+           DISPLAY "ENTER DOB OF MOTHER :" AT 1401.
+           ACCEPT EPDOBM AT 1435.
+           DISPLAY "ENTER SPOUSE NAME :" AT 1501.
+           ACCEPT EPSPOUSE AT 1535.
+           DISPLAY "ENTER CHILD NAME :" AT 1601.
+           ACCEPT EPCHILD AT 1635.
+           DISPLAY "ENTER DOB OF CHILD :" AT 1701.
+           ACCEPT EPDOBC AT 1735.
+           WRITE EMPPERSONALREC.
+           CLOSE EMPPERSONALFILE.
+           GO TO MAIN-PARA.
 
        END PROGRAM EMPWRITE.
