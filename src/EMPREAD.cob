@@ -355,7 +355,7 @@
        *>     GOBACK.
 
        BRANCH-PARA.
-           DISPLAY SPACE AT 0101 WITH ERASE EOS.
+           COPY CLEAR-SCREEN.
            OPEN INPUT BRANCHFILE.
    *>>D    COPY FS-MSG REPLACING STATUS BY FSB
    *>>D                          MSG    BY FS_MSG.
@@ -369,7 +369,7 @@
    *>>D                          MSG    BY FS_MSG.
    *>>D    STRING "READ BRANCHFILE: " FS_MSG INTO FS_MSG_AUX.
    *>>D    DISPLAY FS_MSG_AUX AT 3199.
-           DISPLAY SPACES AT 0101 WITH ERASE EOL.
+           COPY CLEAR-SCREEN.
            DISPLAY "   BBRID:" AT 0101
            DISPLAY " BBRNAME:" AT 0201
            DISPLAY "  BBRADD:" AT 0301
