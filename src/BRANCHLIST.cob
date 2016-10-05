@@ -46,6 +46,42 @@
        77 I-FINAL      PIC 99.
        77 CRT-STATUS  PIC 9(4).
 
+       SCREEN SECTION.
+
+       01 HEADER.
+           03 BACKGROUND-COLOR 0
+              FOREGROUND-COLOR 2 HIGHLIGHT.
+           05 LINE 1 COLUMN 1 VALUE  "|  BBRID".
+           05 LINE 2 COLUMN 1 VALUE  "|--------".
+           05 LINE 1 COLUMN 10 VALUE  "|         BBRNAME".
+           05 LINE 2 COLUMN 10 VALUE  "+-----------------".
+           05 LINE 1 COLUMN 28 VALUE "|                         BBRADD"
+           05 LINE 2 COLUMN 28
+              VALUE "+--------------------------------".
+           05 LINE 1 COLUMN 61 VALUE "|      BBRPH".
+           05 LINE 2 COLUMN 61 VALUE "+------------".
+           05 LINE 1 COLUMN 74 VALUE "|               BEMAIL".
+           05 LINE 2 COLUMN 74 VALUE "+----------------------".
+           05 LINE 1 COLUMN 97 VALUE "|                  BMGRNAME |".
+           05 LINE 2 COLUMN 97 VALUE "+---------------------------|".
+
+       01 ROW.
+           03 BACKGROUND-COLOR 0
+              FOREGROUND-COLOR 2 HIGHLIGHT.
+           05            LINE I COLUMN 1 VALUE "|".
+           05            LINE I COLUMN 10 VALUE "|".
+           05            LINE I COLUMN 28 VALUE "|".
+           05            LINE I COLUMN 61 VALUE "|".
+           05            LINE I COLUMN 74 VALUE "|".
+           05            LINE I COLUMN 97 VALUE "|".
+           05            LINE I COLUMN 125 VALUE "|".
+           05  PIC X(6)  LINE I COLUMN 3 FROM BBRID.
+           05  PIC X(15) LINE I COLUMN 12 FROM BBRNAME.
+           05  PIC X(30) LINE I COLUMN 30 FROM BBRADD.
+           05  PIC X(10) LINE I COLUMN 63 FROM BBRPH.
+           05  PIC X(20) LINE I COLUMN 76 FROM BEMAIL.
+           05  PIC X(25) LINE I COLUMN 99 FROM BMGRNAME.
+
        PROCEDURE DIVISION.
        MAIN-PARA.
            COPY CLEAR-SCREEN.
@@ -56,23 +92,9 @@
            *> Start sequential read of the file
            START BRANCHFILE END-START
            COPY CLEAR-SCREEN.
-           DISPLAY "|  BBRID" AT 0101 END-DISPLAY
-           DISPLAY "|--------" AT 0201 END-DISPLAY
-           DISPLAY "|         BBRNAME" AT 0110 END-DISPLAY
-           DISPLAY "+-----------------" AT 0210 END-DISPLAY
-           DISPLAY "|                         BBRADD" AT 0128
-           DISPLAY "+--------------------------------" AT 0228
-           DISPLAY "|      BBRPH" AT 0161 END-DISPLAY
-           DISPLAY "+------------" AT 0261 END-DISPLAY
-           DISPLAY "|               BEMAIL" AT 0174 END-DISPLAY
-           DISPLAY "+----------------------" AT 0274 END-DISPLAY
-           DISPLAY "|                  BMGRNAME |" AT 0197 END-DISPLAY
-           DISPLAY "+---------------------------|" AT 0297 END-DISPLAY
 
-           MOVE 03 TO I-INITIAL.
-           MOVE 13 TO I-FINAL.
-           MOVE I-INITIAL TO I.
-           MOVE "F" TO PAGINATION-DIR.
+           DISPLAY HEADER END-DISPLAY
+           MOVE 3 TO I.
            PERFORM FOREVER
               IF PAGINATION-DIR = "F"
                   READ BRANCHFILE NEXT RECORD
@@ -98,26 +120,9 @@
                   END-IF
               END-IF
 
-              DISPLAY "|" AT LINE NUMBER I COLUMN NUMBER 1 END-DISPLAY
-              DISPLAY "|" AT LINE NUMBER I COLUMN NUMBER 10 END-DISPLAY
-              DISPLAY "|" AT LINE NUMBER I COLUMN NUMBER 28 END-DISPLAY
-              DISPLAY "|" AT LINE NUMBER I COLUMN NUMBER 61 END-DISPLAY
-              DISPLAY "|" AT LINE NUMBER I COLUMN NUMBER 74 END-DISPLAY
-              DISPLAY "|" AT LINE NUMBER I COLUMN NUMBER 97 END-DISPLAY
-              DISPLAY "|" AT LINE NUMBER I COLUMN NUMBER 125 END-DISPLAY
+              DISPLAY ROW END-DISPLAY
 
-              DISPLAY BBRID
-                  AT LINE NUMBER I COLUMN NUMBER 03 END-DISPLAY
-              DISPLAY BBRNAME
-                  AT LINE NUMBER I COLUMN NUMBER 12 END-DISPLAY
-              DISPLAY BBRADD
-                  AT LINE NUMBER I COLUMN NUMBER 30 END-DISPLAY
-              DISPLAY BBRPH
-                  AT LINE NUMBER I COLUMN NUMBER 63 END-DISPLAY
-              DISPLAY BEMAIL
-                  AT LINE NUMBER I COLUMN NUMBER 76 END-DISPLAY
-              DISPLAY BMGRNAME
-                  AT LINE NUMBER I COLUMN NUMBER 99 END-DISPLAY
+
               ADD 1 TO I END-ADD
               IF I IS EQUAL TO 13
                   DISPLAY "F1: NEXT    F2: RETURN"
