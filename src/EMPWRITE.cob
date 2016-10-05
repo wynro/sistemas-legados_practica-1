@@ -320,23 +320,24 @@
        BRANCH-PARA.
            COPY CLEAR-SCREEN.
 
-           DISPLAY "   ENTER BRANCH CODE: ______" AT 0101
-           DISPLAY "   ENTER BRANCH NAME: _______________" AT 0201
+           DISPLAY "****** NEW BRANCH REGISTER ******" AT 0620
+           DISPLAY "   ENTER BRANCH CODE: ______" AT 0812
+           DISPLAY "   ENTER BRANCH NAME: _______________" AT 0912
            DISPLAY "ENTER BRANCH ADDRESS: _____________________________"
-               AT 0301 *> !TODO: Find meaning
+               AT 1012 *> !TODO: Find meaning
            DISPLAY "         ENTER PHONE: __________"
-               AT 0401 *> !TODO: Find meaning
+               AT 1112 *> !TODO: Find meaning
            DISPLAY "        ENTER E-MAIL: ____________________"
-               AT 0501
+               AT 1212
            DISPLAY "  ENTER MANAGER NAME: _________________________"
-               AT 0601
+               AT 1312
 
-           ACCEPT BBRID AT 0123 WITH UNDERLINE END-ACCEPT
-           ACCEPT BBRNAME AT 0223 WITH UNDERLINE END-ACCEPT
-           ACCEPT BBRADD AT 0323 WITH UNDERLINE END-ACCEPT
-           ACCEPT BBRPH AT 0423 WITH UNDERLINE END-ACCEPT
-           ACCEPT BEMAIL AT 0523 WITH UNDERLINE END-ACCEPT
-           ACCEPT BMGRNAME AT 0623 WITH UNDERLINE END-ACCEPT
+           ACCEPT BBRID AT 0834 WITH UNDERLINE END-ACCEPT
+           ACCEPT BBRNAME AT 0934 WITH UNDERLINE END-ACCEPT
+           ACCEPT BBRADD AT 1034 WITH UNDERLINE END-ACCEPT
+           ACCEPT BBRPH AT 1134 WITH UNDERLINE END-ACCEPT
+           ACCEPT BEMAIL AT 1234 WITH UNDERLINE END-ACCEPT
+           ACCEPT BMGRNAME AT 1334 WITH UNDERLINE END-ACCEPT
            *>IF THE FILE DOES NOT EXIST,THIS FAILS !TODO: FIX!
            OPEN I-O BRANCHFILE.
    *>>D    COPY FS-MSG REPLACING STATUS BY FSB
@@ -356,8 +357,8 @@
    *>>D    STRING "CLOSE BRANCHFILE.: " FS_MSG INTO STUFF.
    *>>D    DISPLAY STUFF AT 3299.
 
-           DISPLAY "CONTINUE" AT 0701.
-           ACCEPT WAITFOR AT 0709.
+           DISPLAY "CONTINUE" AT 1529.
+           ACCEPT WAITFOR AT 1537.
            STOP ' '.
            GOBACK.
 
