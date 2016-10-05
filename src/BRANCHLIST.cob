@@ -125,7 +125,7 @@
 
               ADD 1 TO I END-ADD
               IF I IS EQUAL TO 13
-                  DISPLAY "F1: NEXT    F2: RETURN"
+                  DISPLAY "F1/Enter: NEXT    F2: RETURN"
                       AT 1401 END-DISPLAY
                   ACCEPT CHOICE AT 1501 END-ACCEPT
                   EVALUATE CRT-STATUS
