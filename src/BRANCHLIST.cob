@@ -96,17 +96,10 @@
            DISPLAY HEADER END-DISPLAY
            MOVE 3 TO I.
            PERFORM FOREVER
-              IF PAGINATION-DIR = "F"
-                  READ BRANCHFILE NEXT RECORD
-                      INTO BRANCHREC
-                      AT END EXIT PERFORM
-                  END-READ
-              ELSE
-                  READ BRANCHFILE PREVIOUS RECORD
-                      INTO BRANCHREC
-                      AT END EXIT PERFORM
-                  END-READ
-              END-IF
+               READ BRANCHFILE NEXT RECORD
+                   INTO BRANCHREC
+                   AT END EXIT PERFORM
+               END-READ
 
               IF CITY NOT EQUALS '   '
                   MOVE 0 TO NUMCITY
