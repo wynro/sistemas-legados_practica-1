@@ -41,6 +41,9 @@
        77 CITYT       PIC X(4).
        77 NUMCITY     PIC 9.
        77 CHOICE      PIC X.
+       77 PAGINATION-DIR       PIC X.
+       77 I-INITIAL    PIC 99.
+       77 I-FINAL      PIC 99.
        77 CRT-STATUS  PIC 9(4).
 
        SCREEN SECTION.
@@ -93,10 +96,10 @@
            DISPLAY HEADER END-DISPLAY
            MOVE 3 TO I.
            PERFORM FOREVER
-              READ BRANCHFILE NEXT RECORD
-                 INTO BRANCHREC
-                 AT END EXIT PERFORM
-              END-READ
+               READ BRANCHFILE NEXT RECORD
+                   INTO BRANCHREC
+                   AT END EXIT PERFORM
+               END-READ
 
               IF CITY NOT EQUALS '   '
                   MOVE 0 TO NUMCITY
@@ -115,7 +118,7 @@
 
               ADD 1 TO I END-ADD
               IF I IS EQUAL TO 13
-                  DISPLAY "F1: NEXT    F2: RETURN"
+                  DISPLAY "F1/Enter: NEXT    F2: RETURN"
                       AT 1401 END-DISPLAY
                   ACCEPT CHOICE AT 1501 END-ACCEPT
                   EVALUATE CRT-STATUS
